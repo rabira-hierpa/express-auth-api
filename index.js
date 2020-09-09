@@ -6,10 +6,11 @@ const body_parser = require('body-parser');
 const app = express();
 // Import routes
 const authRoute = require('./routes/auth');
+const postRoute = require('./routes/posts');
 const homeRoute = require('./routes/home');
 
 dotenv.config();
-var db_url = process.env.MONGO_ATLAS_DB;
+var db_url = process.env.DRALAB_DB;
 
 // Connect to DB
 mongoose.connect(db_url, { useNewUrlParser: true }, () => {
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(body_parser.json());
 // Route Middlewares
 app.use('/api/user/', authRoute);
+app.use('/api/posts', postRoute);
 app.use('/api', homeRoute);
 
 app.listen(3000, () => {
